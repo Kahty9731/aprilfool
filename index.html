@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>愚人节快乐</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .emoji {
+            font-size: 100px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 36px;
+            color: #333;
+        }
+        
+        .container {
+            animation: bounce 1s;
+        }
+        
+        @keyframes bounce {
+            0% { transform: scale(0.1); }
+            60% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            top: -10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="emoji">😜</div>
+        <h1>愚人节快乐！</h1>
+    </div>
+    
+    <script>
+        // 简单的彩带效果
+        function createConfetti() {
+            const colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(function() {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    document.body.appendChild(confetti);
+                    
+                    let speed = 3 + Math.random() * 5;
+                    let rotation = Math.random() * 360;
+                    let position = -10;
+                    
+                    function moveConfetti() {
+                        position += speed;
+                        rotation += 5;
+                        confetti.style.top = position + 'px';
+                        confetti.style.transform = 'rotate(' + rotation + 'deg)';
+                        
+                        if (position < window.innerHeight) {
+                            requestAnimationFrame(moveConfetti);
+                        } else {
+                            confetti.remove();
+                        }
+                    }
+                    
+                    moveConfetti();
+                }, i * 100);
+            }
+        }
+        
+        // 页面加载完成后执行
+        window.onload = function() {
+            createConfetti();
+            // 每5秒重新生成彩带
+            setInterval(createConfetti, 5000);
+        };
+    </script>
+</body>
+</html>
